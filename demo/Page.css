@@ -1,0 +1,12 @@
+
+.editor {
+  width: 400px;
+  min-height: 200px;
+  white-space: pre-wrap;
+  border: solid 2px rgba(0,0,0,.5);
+}
+
+.editor img {
+  max-width: 10em;
+  vertical-align: bottom;
+}
