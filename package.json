@@ -1,9 +1,12 @@
 {
   "name": "react-editor",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "repository": "git@github.com:fritx/react-editor.git",
   "license": "MIT",
-  "main": "src/index.js",
+  "main": "dist/",
+  "scripts": {
+    "dev": "webpack -w --progress"
+  },
   "dependencies": {},
   "devDependencies": {
     "babel-core": "^6.3.26",
@@ -15,7 +18,8 @@
     "css-loader": "^0.23.1",
     "html-webpack-plugin": "^1.7.0",
     "jquery": "^2.1.4",
-    "react-lite": "0.0.8",
+    "react": "^0.14.7",
+    "react-dom": "^0.14.7",
     "style-loader": "^0.13.0",
     "webpack": "^1.12.9",
     "webpack-notifier": "^1.2.1"

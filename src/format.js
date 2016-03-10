@@ -1,5 +1,5 @@
 import $ from 'jquery'
-// import _ from 'lodash'
+import _ from 'lodash'
 
 export function parse() {
   const items = []
@@ -8,9 +8,15 @@ export function parse() {
 }
 
 export function filter(html) {
+  let mat = html.match(/<!--StartFragment-->([\s\S]*?)<!--EndFragment-->/)
+  if (mat) html = mat[1]
+  mat = html.match(/<body>([\s\S]*?)<\/body>/)
+  if (mat) html = mat[1]
   const $src = $('<div>').html(html)
   const $dest = $('<div>')
   filterContent($src, $dest)
+  $dest.children('[x-block]').removeAttr('x-block')
+  $dest.children(':empty').remove()
   return $dest.html()
 }
 
@@ -21,10 +27,8 @@ blockElements += ', li' // display:iist-item => block
 blockElements += ', tr'
 
 // 过滤清理 内容
-// case: readme首部 https://github.com/sindresorhus/awesome-electron
-function filterContent($src, $dest){
-  // _.each($src[0].childNodes, function(node, i){
-  [].forEach.call($src[0].childNodes, function(node, i){
+function filterContent($src, $dest) {
+  _.each($src[0].childNodes, function(node, i){
     if (node.nodeType === Node.TEXT_NODE) {
       getLine().append(node.cloneNode())
       return
@@ -36,14 +40,17 @@ function filterContent($src, $dest){
 
     var $node = $(node)
 
+    // 过滤消息中的用户头像
+    if ($node.is('[headimg], .avatar, .nocopy')) return
+
     if ($node.is('img')) {
 
       // 如果可能是emoji 则优先使用alt
       // case: 右侧 http://changba.com/s/MWN6SYnX0zJwnnKNijYL-w?&code=Kxhsv6044ik
-      if ($node.is('[class*=emoji], [src*=emoji]') && $node.attr('alt')) {
-        getLine().append($node.attr('alt'))
-        return
-      }
+      // if ($node.is('[class*=emoji], [src*=emoji]') && $node.attr('alt')) {
+      //   getLine().append($node.attr('alt'))
+      //   return
+      // }
 
       getLine().append('<img src="'+ $node.attr('src') +'">')
       return
@@ -55,7 +62,8 @@ function filterContent($src, $dest){
       return
     }
 
-    var html = $node.html().trim()
+    // var html = $node.html().trim()
+    var html = $node.html()
     if (!html) return
 
     var isBlock = $node.is(blockElements)
@@ -73,7 +81,7 @@ function filterContent($src, $dest){
     if (isBlock) getLine(true)
   })
 
-  function getLine(newBlock){
+  function getLine(newBlock) {
     var $prev = $dest.children('div').last()
     var $line = $prev
     if ($prev.length > 0 && !$prev.html()) {
@@ -90,12 +98,16 @@ function filterContent($src, $dest){
   }
 }
 
-export function clean(dom){
-  // 消除嵌套多层的div
-  var $el = $(dom)
-  // amazing无敌选择器 选出嵌套的目标
-  var $main = $el.find('div:has(>div:not(:has(div))), .editor').first()
-  $el.html($main.html())
+export function lint(dom) {
+
+  return // 暂时取消
+  // console.log('dom', dom.innerHTML)
+  // // 消除嵌套多层的div
+  // var $el = $(dom)
+  // // amazing无敌选择器 选出嵌套的目标
+  // var $main = $el.find('div:has(>div:not(:has(div))), .editor').first()
+  // $el.html($main.html())
+  // console.log('main', $main.html())
 
 
   var $el = $(dom)
