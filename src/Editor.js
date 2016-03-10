@@ -20,7 +20,6 @@ export default class Editor extends Component {
   constructor() {
     super()
     this.savedRange = null
-    global.editor = this
   }
 
   focus() {

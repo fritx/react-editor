@@ -1,5 +1,4 @@
 import $ from 'jquery'
-import _ from 'lodash'
 
 export function parse() {
   const items = []
@@ -28,7 +27,8 @@ blockElements += ', tr'
 
 // 过滤清理 内容
 function filterContent($src, $dest) {
-  _.each($src[0].childNodes, function(node, i){
+  // _.each($src[0].childNodes, function(node, i){
+  [].forEach.call($src[0].childNodes, function(node, i){
     if (node.nodeType === Node.TEXT_NODE) {
       getLine().append(node.cloneNode())
       return
@@ -100,7 +100,7 @@ function filterContent($src, $dest) {
 
 export function lint(dom) {
 
-  return // 暂时取消
+  // return // 暂时取消
   // console.log('dom', dom.innerHTML)
   // // 消除嵌套多层的div
   // var $el = $(dom)
