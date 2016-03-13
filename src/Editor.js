@@ -7,7 +7,6 @@ import { clearRange, setRange, getRange } from './range'
 
 function escapeHTML(str) {
   return str.replace(/&/g, '&amp;') // `&`必须最前`
-    // .replace(/ /g, '&nbsp;')
     .replace(/"/g, '&quot;')
     .replace(/'/g, '&#39;')
     .replace(/</g, '&lt;')
@@ -40,6 +39,13 @@ export default class Editor extends Component {
   saveRange() {
     const range = getRange(this.refs.edit)
     if (range) this.savedRange = range
+  }
+
+  getHTML() {
+    return this.refs.edit.innerHTML
+  }
+  setHTML(html) {
+    this.refs.edit.innerHTML = html
   }
 
   insertHTML(html) {

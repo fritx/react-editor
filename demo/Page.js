@@ -10,6 +10,10 @@ const isCtrlSend = true
 
 export default class Page extends Component {
 
+  componentDidMount() {
+    this.refs.editor.setHTML(html) // 初始化内容
+  }
+
   submitForm() {
     // todo
     console.log('submitForm')
@@ -49,8 +53,7 @@ export default class Page extends Component {
       <div onFocus={(e) => this.onFocus(e)}
         onBlur={(e) => this.onBlur(e)}
         onKeyDown={(e) => this.onKeyDown(e)}>
-        <Editor ref="editor" className={styles.editor}
-          dangerouslySetInnerHTML={{__html: html}} />
+        <Editor ref="editor" className={styles.editor} />
       </div>
     )
   }
