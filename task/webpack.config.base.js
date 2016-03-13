@@ -1,21 +1,22 @@
 'use strict'
-var path = require('path')
-var webpack = require('webpack')
-var CleanPlugin = require('clean-webpack-plugin')
-var HtmlPlugin = require('html-webpack-plugin')
-var Notifier = require('webpack-notifier')
+const path = require('path')
+const webpack = require('webpack')
+// const CleanPlugin = require('clean-webpack-plugin')
+const Notifier = require('webpack-notifier')
 
 module.exports = {
   module: {
+    preLoaders: [
+      { test: /\.js$/, exclude: /node_modules/, loader: 'eslint' },
+    ],
     loaders: [
       { test: /\.js$/, loader: 'babel', exclude: /node_modules/ },
       { test: /\.css$/, loader: 'style!css?modules', exclude: /node_modules/ },
     ]
   },
-  entry: './demo/index.js',
   output: {
     path: 'dist/',
-    filename: 'index.js'
+    filename: '[name]'
   },
   resolve: {
     // alias: {
@@ -25,11 +26,7 @@ module.exports = {
     extensions: ['', '.js']
   },
   plugins: [
-    new webpack.DefinePlugin({
-      'process.env.NODE_ENV': JSON.stringify('development'),
-    }),
     new Notifier({ alwaysNotify: true }),
-    new CleanPlugin(path.join(__dirname, 'dist')),
-    new HtmlPlugin(),
+    // new CleanPlugin(path.join(__dirname, 'dist')),
   ]
 }

@@ -58,7 +58,7 @@ export default class Editor extends Component {
   onPaste(e) {
     // note: 造成editor滚动失效
     e.preventDefault()
-    const types = e.clipboardData.types
+    // const types = e.clipboardData.types
     const html = e.clipboardData.getData('text/html')
     const text = e.clipboardData.getData('text/plain')
     // console.log('paste:html', html)

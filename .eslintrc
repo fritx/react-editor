@@ -1,0 +1,26 @@
+{
+  "extends": ["rackt"],
+  "env": {
+    "browser": true
+  },
+  "rules": {
+    "eol-last": 1,
+    "valid-jsdoc": 0,
+    "indent": 1,
+    "strict": [1, "global"],
+    "no-console": 0,
+    "no-unused-vars": 1,
+    "comma-dangle": [1, "always-multiline"],
+    "no-multiple-empty-lines": 1,
+    "react/prop-types": 0,
+    "react/jsx-key": 1,
+    "react/jsx-indent-props": [1, 2],
+    "react/jsx-closing-bracket-location": [1, "after-props"],
+    "react/jsx-uses-react": 1,
+    "react/jsx-no-undef": 2,
+    "react/wrap-multilines": 2
+  },
+  "plugins": [
+    "react"
+  ]
+}
