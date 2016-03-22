@@ -1,7 +1,7 @@
-import React, { Component } from 'react'
+import React, { Component, PropTypes } from 'react'
 import { filter, lint } from './format'
 import { clearRange, setRange, getRange } from './range'
-// import pasteFile from './pasteFile'
+import pasteFile from './pasteFile'
 // import { emojiReplace } from '../Emoji'
 // import { escapeHTML } from '../Text'
 
@@ -15,6 +15,10 @@ function escapeHTML(str) {
 
 
 export default class Editor extends Component {
+
+  static propTypes = {
+    pasteToFs: PropTypes.bool,
+  };
 
   constructor() {
     super()
@@ -62,39 +66,33 @@ export default class Editor extends Component {
   }
 
   onPaste(e) {
-    // note: 造成editor滚动失效
     e.preventDefault()
-    // const types = e.clipboardData.types
+    const { pasteToFs } = this.props
+    const types = e.clipboardData.types
     const html = e.clipboardData.getData('text/html')
     const text = e.clipboardData.getData('text/plain')
     // console.log('paste:html', html)
     // console.log('paste:text', text)
 
+    // 延时 解决 execCommand('paste') 递归问题
+    // setTimeout(() => {
+    if (html) {
+      const _html = filter(html)
+      // console.log('insert:html', _html)
+      // document.execCommand('insertHtml', 0, _html)
+      setTimeout(() => { this.insertHTML(_html) })
+    }
+    else if (text) {
+      // console.log('insert:text', text)
+      // document.execCommand('insertText', 0, text)
+      setTimeout(() => { this.insertText(text) })
+    }
+    // mac粘贴word需要 优先识别文本 然后图片
     // 粘贴板内有files 如来自QQ截屏
-    // if (types && types.indexOf('Files') > -1) {
-    //   pasteFile(e)
-    //   return
-    // }
-
-    // fixme: use this.insertHTML
-    setTimeout(() => { // 解决execCommand递归
-      if (html) {
-        const _html = filter(html)
-        // console.log('insert:html', _html)
-        this.insertHTML(_html)
-        // const _html = emojiReplace(filter(html))
-        // console.log('insert:html', _html)
-        // document.execCommand('insertHtml', 0, _html)
-      }
-      else if (text) {
-        // console.log('insert:text', text)
-        this.insertText(text)
-        // const _html = emojiReplace(textToHTML(text))
-        // document.execCommand('insertHtml', 0, _html)
-        // document.execCommand('insertText', 0, text)
-      }
-      this.lint()
-    })
+    else if (pasteToFs && types && types.indexOf('Files') > -1) {
+      pasteFile.call(this, e)
+    }
+    // })
   }
 
   // 确保选中前lint 不影响选中
