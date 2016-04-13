@@ -8,7 +8,6 @@
     "prod": "webpack -w --progress --config task/webpack.config.prod",
     "demo": "webpack -w --progress --config task/webpack.config.demo"
   },
-  "dependencies": {},
   "devDependencies": {
     "babel-core": "^6.3.26",
     "babel-eslint": "^4.1.8",
@@ -23,11 +22,14 @@
     "eslint-loader": "^1.3.0",
     "eslint-plugin-react": "^3.16.1",
     "html-webpack-plugin": "^1.7.0",
-    "jquery": "^2.1.4",
-    "react": "^0.14.7",
-    "react-dom": "^0.14.7",
     "style-loader": "^0.13.0",
     "webpack": "^1.12.9",
     "webpack-notifier": "^1.2.1"
-  }
+  },
+  "peerDependencies": {
+    "jquery": "*",
+    "react": "*",
+    "react-dom": "*"
+  },
+  "dependencies": {}
 }

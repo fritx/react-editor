@@ -12,6 +12,10 @@ export default class Page extends Component {
 
   componentDidMount() {
     this.refs.editor.setHTML(html) // 初始化内容
+
+    window.addEventListener('click', () => {
+      this.forceUpdate() // demo中模拟外部render
+    })
   }
 
   submitForm() {
