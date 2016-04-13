@@ -7,17 +7,19 @@ const Notifier = require('webpack-notifier')
 module.exports = {
   module: {
     preLoaders: [
-      { test: /\.js$/, exclude: /node_modules/, loader: 'eslint' },
+      { test: /\.js$/, exclude: /\/dist\/|node_modules/, loader: 'eslint' },
     ],
     loaders: [
-      { test: /\.js$/, loader: 'babel', exclude: /node_modules/ },
+      { test: /\.js$/, loader: 'babel', exclude: /\/dist\/|node_modules/ },
       { test: /\.css$/, loader: 'style!css?modules', exclude: /node_modules/ },
     ]
   },
+  
   output: {
     path: 'dist/',
     filename: '[name]'
   },
+
   resolve: {
     // alias: {
     //   'react': 'react-lite',
@@ -25,6 +27,7 @@ module.exports = {
     // },
     extensions: ['', '.js']
   },
+
   plugins: [
     new Notifier({ alwaysNotify: true }),
     new webpack.ExternalsPlugin('commonjs', [
