@@ -10,10 +10,10 @@ function uuid() {
   function s4() {
     return Math.floor((1 + Math.random()) * 0x10000)
       .toString(16)
-      .substring(1);
+      .substring(1)
   }
   return s4() + s4() + '-' + s4() + '-' + s4() + '-' +
-    s4() + '-' + s4() + s4() + s4();
+    s4() + '-' + s4() + s4() + s4()
 }
 
 export default function pasteFile(e) {
@@ -21,55 +21,55 @@ export default function pasteFile(e) {
   // $('#editor').scrollTop(1e9)
 
   e.preventDefault()
-  //var clipboard = gui.Clipboard.get();
-  //var text = clipboard.get('text');
-  var items, item, types, i = 0;
-  var clipboardData = (e.originalEvent || e).clipboardData;
+  //let clipboard = gui.Clipboard.get()
+  //let text = clipboard.get('text')
+  let items, item, types, i = 0
+  let clipboardData = (e.originalEvent || e).clipboardData
 
   if (clipboardData) {
-    items = clipboardData.items;
+    items = clipboardData.items
 
     if (!items) {
-      return;
+      return
     }
-    item = items[0];
-    // var t = clipboardData.types;
-    types = clipboardData.types || [];
+    item = items[0]
+    // let t = clipboardData.types
+    types = clipboardData.types || []
     for (; i < types.length; i++) {
       if (types[i] === 'Files') {
-        item = items[i];
-        break;
+        item = items[i]
+        break
       }
     }
     if (item && item.kind === 'file' && /^image\/|^(jpe?g|png|bmp|gif)$/.test(item.type)) {
-      var blob = item.getAsFile()
-      var reader = new FileReader()
-      // var ext = mime.extension(item.type)
-      var ext = item.type.match(/\/(.+)/)[1]
-      var file = join(tmpdir(), `${uuid()}.${ext}`)
-      // var url = URL.createObjectURL(blob)
-      // richText.insertCapture(url);
+      let blob = item.getAsFile()
+      let reader = new FileReader()
+      // let ext = mime.extension(item.type)
+      let ext = item.type.match(/\/(.+)/)[1]
+      let file = join(tmpdir(), `${uuid()}.${ext}`)
+      // let url = URL.createObjectURL(blob)
+      // richText.insertCapture(url)
 
       reader.onload = (e) => {
         if (!e.target.result) return
         fs.writeFile(file, e.target.result, 'binary', (err) => {
           if (err) return
-          // richText.insertCapture('file://' + file);
-          // global.editor.insertImage(`file:\/\/${file}`);
-          // edit.insertImage(`file:\/\/${file}`);
-          this.insertImage(`file:\/\/${file}`);
+          // richText.insertCapture('file://' + file)
+          // global.editor.insertImage(`file:\/\/${file}`)
+          // edit.insertImage(`file:\/\/${file}`)
+          this.insertImage(`file:\/\/${file}`)
 
           // // 不知为何 企业qq复制的图片不能读取
           // if (!e.target.result) return
 
           // api.uploadFile(path,"img", (err,data) +> {
-          //     var url = config.get("resurl")+"/api/fs/view/"+data.token+"?size=mini&token="+global.token;
-          //     richText.insertCapture(url);
-          // });
-        });
-        // $("#editor").focus();
-      };
-      reader.readAsBinaryString(blob);
+          //     let url = config.get("resurl")+"/api/fs/view/"+data.token+"?size=mini&token="+global.token
+          //     richText.insertCapture(url)
+          // })
+        })
+        // $("#editor").focus()
+      }
+      reader.readAsBinaryString(blob)
     }
   }
 }

@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react'
 import { filter, lint } from './format'
 import { clearRange, setRange, getRange } from './range'
-import pasteFile from './pasteFile'
+// import pasteFile from './pasteFile'
 // import { emojiReplace } from '../Emoji'
 // import { escapeHTML } from '../Text'
 
@@ -90,7 +90,7 @@ export default class Editor extends Component {
     // mac粘贴word需要 优先识别文本 然后图片
     // 粘贴板内有files 如来自QQ截屏
     else if (pasteToFs && types && types.indexOf('Files') > -1) {
-      pasteFile.call(this, e)
+      require('./pasteFile').call(this, e)
     }
     // })
   }

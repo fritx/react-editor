@@ -27,6 +27,9 @@ module.exports = {
   },
   plugins: [
     new Notifier({ alwaysNotify: true }),
+    new webpack.ExternalsPlugin('commonjs', [
+      'path', 'fs', 'os',
+    ]),
     // new CleanPlugin(path.join(__dirname, 'dist')),
   ]
 }
