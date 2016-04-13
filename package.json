@@ -29,6 +29,7 @@
   "peerDependencies": {
     "jquery": "*",
     "react": "*",
+    "react-addons-pure-render-mixin": "*",
     "react-dom": "*"
   },
   "dependencies": {}

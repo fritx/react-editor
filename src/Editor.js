@@ -1,4 +1,5 @@
 import React, { Component, PropTypes } from 'react'
+import { shouldComponentUpdate } from 'react-addons-pure-render-mixin'
 import { filter, lint } from './format'
 import { clearRange, setRange, getRange } from './range'
 // import pasteFile from './pasteFile'
@@ -23,6 +24,9 @@ export default class Editor extends Component {
   constructor() {
     super()
     this.savedRange = null
+
+    // http://facebook.github.io/react/docs/pure-render-mixin.html
+    this.shouldComponentUpdate = this::shouldComponentUpdate
   }
 
   focus() {
