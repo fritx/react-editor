@@ -14,11 +14,6 @@ module.exports = {
       { test: /\.css$/, loader: 'style!css?modules', exclude: /node_modules/ },
     ]
   },
-  
-  output: {
-    path: 'dist/',
-    filename: '[name]'
-  },
 
   resolve: {
     // alias: {

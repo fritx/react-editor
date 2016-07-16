@@ -6,8 +6,12 @@ const config = module.exports = Object.assign({}, base)
 config.entry = {
   'index.js': './src/index.js',
 }
-  
-config.output.libraryTarget = 'commonjs2'
+
+config.output = {
+  path: 'dist/',
+  filename: '[name]',
+  libraryTarget: 'commonjs2',
+}
 
 // https://github.com/reactjs/react-redux/blob/master/webpack.config.js
 // config.externals = {
@@ -23,10 +27,11 @@ config.plugins = config.plugins.concat([
   new webpack.ExternalsPlugin('commonjs2', [
     'jquery', 'react', 'react-dom',
   ]),
-  new webpack.optimize.UglifyJsPlugin({
-    compressor: {
-      screw_ie8: true,
-      warnings: false
-    }
-  }),
+  // commonjs不应压缩 影响sourcemap
+  // new webpack.optimize.UglifyJsPlugin({
+  //   compressor: {
+  //     screw_ie8: true,
+  //     warnings: false
+  //   }
+  // }),
 ])
