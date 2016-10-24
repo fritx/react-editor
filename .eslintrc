@@ -12,6 +12,7 @@
     "no-unused-vars": 1,
     "comma-dangle": [1, "always-multiline"],
     "no-multiple-empty-lines": 1,
+    "array-bracket-spacing": 0,
     "react/prop-types": 0,
     "react/jsx-key": 1,
     "react/jsx-indent-props": [1, 2],

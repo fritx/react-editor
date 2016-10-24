@@ -1,10 +1,6 @@
 import React, { Component, PropTypes } from 'react'
-// import emoji from 'apple-color-emoji'
 import { filter, lint } from './format'
 import { clearRange, setRange, getRange } from './range'
-// import pasteFile from './pasteFile'
-// import { emojiReplace } from '../Emoji'
-// import { escapeHTML } from '../Text'
 
 function escapeHTML(str) {
   return str.replace(/&/g, '&amp;') // `&`必须最前`
@@ -15,11 +11,19 @@ function escapeHTML(str) {
     .replace(/>/g, '&gt;')
 }
 
+function objEqual(o1, o2) {
+  const [k1, k2] = [Object.keys(o1), Object.keys(o2)]
+  if (k1.length !== k2.length) return false
+  return k1.every(k => {
+    return o1[k] === o2[k]
+  })
+}
 
 export default class Editor extends Component {
 
   static propTypes = {
     pasteToFs: PropTypes.bool,
+    emojiReplace: PropTypes.func,
   };
 
   constructor() {
@@ -42,9 +46,12 @@ export default class Editor extends Component {
   shouldComponentUpdate(props) {
     // dangerousSetInnerHTML不需要更新
     // 修复输入文字 cursor回跳现象
-    // if (!_.isEqual(props.style, this.props.style)) return true
-    if (props.style !== this.props.style) return true
+    if (!objEqual(props.style, this.props.style)) return true
     return false
+  }
+
+  componentDidMount() {
+    this.lint()
   }
 
   lint() {
@@ -73,12 +80,12 @@ export default class Editor extends Component {
   }
 
   insertHTML(html) {
+    const { emojiReplace } = this.props
     this.focus()
-    // html = emojiReplace(html)
     setTimeout(() => {
-      // html = html.replace(emoji.regex, (c) => {
-      //   return `<img src="${emoji.getImage(c)}">`
-      // })
+      if (emojiReplace) {
+        html = emojiReplace(html)
+      }
       document.execCommand('insertHTML', 0, html)
     })
   }
@@ -135,14 +142,10 @@ export default class Editor extends Component {
       require('./pasteFile').call(this, e)
     }
     else if (html) {
-      const _html = filter(html)
-      // console.log('insert:html', _html)
-      // document.execCommand('insertHtml', 0, _html)
+      const _html = filter.call(this, html) // pass `this`
       setTimeout(() => { this.insertHTML(_html) })
     }
     else if (text) {
-      // console.log('insert:text', text)
-      // document.execCommand('insertText', 0, text)
       setTimeout(() => { this.insertText(text) })
     }
     // mac粘贴word需要 优先识别文本 然后图片

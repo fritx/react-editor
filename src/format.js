@@ -1,5 +1,4 @@
 import $ from 'jquery'
-// import qqface from '../../../lib/qqface'
 
 export function parse() {
   const items = []
@@ -14,24 +13,26 @@ export function filter(html) {
   if (mat) html = mat[1]
   const $src = $('<div>').html(html)
   const $dest = $('<div>')
-  filterContent($src, $dest)
+  filterContent.call(this, $src, $dest) // pass `this`
   $dest.children('[x-block]').removeAttr('x-block')
   $dest.children('div').each((i, el) => {
     el.innerHTML = el.innerHTML.replace(/\n{3,}/g, '\n\n') // 消除过多换行
     if (!el.innerHTML.trim()) el.parentNode.removeChild(el) // 消除空白div
   })
-  return $dest.html()
+  // 修复从qq复制 英文基本word-break失效
+  // `&nbsp;`需替换为空格
+  return $dest.html().replace(/&nbsp;/g, ' ')
 }
 
 /* eslint-disable */
 // https://github.com/fritx/none/blob/dev/elec%2Fapp%2Feditor.js
 var blockElements = 'address, article, aside, blockquote, canvas, dd, div, dl, fieldset, figure, footer, form, h1, h2, h3, h4, h5, h6, header, hgroup, hr, main, nav, noscript, ol, output, p, pre, section, table, tfoot, ul, video'
-blockElements += ', li' // display:iist-item => block
+blockElements += ', li' // display:list-item => block
 blockElements += ', tr'
 
 // 过滤清理 内容
 function filterContent($src, $dest) {
-  [].forEach.call($src[0].childNodes, function(node){
+  ;[].forEach.call($src[0].childNodes, (node)=>{
     if (node.nodeType === Node.TEXT_NODE) {
       getLine().append(node.cloneNode())
       return
@@ -58,18 +59,12 @@ function filterContent($src, $dest) {
       //   return
       // }
 
-      // qq表情粘贴到GT sysface属性
-      // 从richtext.js迁移 差点漏了
-      // var sysface = $node.attr('sysface')
-      // if (sysface != null) {
-      //   // var index = qqface.indexFromCode(+sysface)
-      //   var index = qqface.sysfaceMap.indexOf(+sysface)
-      //   if (index !== -1 && index <= 104) {
-      //     $node.attr('src', 'main/img/face/' + index + '.gif')
-      //   }
-      // }
-
-      getLine().append('<img src="'+ $node.attr('src') +'">')
+      let src = $node.attr('src')
+      const { onImageNode } = this.props
+      if (onImageNode) {
+        src = onImageNode($node[0]) || src
+      }
+      getLine().append('<img src="'+ src +'">')
       return
     }
 
@@ -87,7 +82,7 @@ function filterContent($src, $dest) {
     if (isBlock) getLine(true)
 
     if ($node.children().length > 0) {
-      filterContent($node, $dest)
+      filterContent.call(this, $node, $dest) // pass `this`
       if (isBlock) getLine(true)
       return
     }
@@ -97,7 +92,9 @@ function filterContent($src, $dest) {
     // case: trello上一张card的title 居然靠textarea直接显示
     if ($node.is('textarea')) return
 
-    var text = $node.text()
+    // 去除多余的换行
+    var text = $node.text().replace(/^\n+|\n+$/g, '')
+
     if (!text) return
     getLine().append(document.createTextNode(text))
     if (isBlock) getLine(true)
