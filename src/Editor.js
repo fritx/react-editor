@@ -139,7 +139,7 @@ export default class Editor extends Component {
     // 延时 解决 execCommand('paste') 递归问题
     // setTimeout(() => {
     if (pasteToFs && isImage) {
-      require('./pasteFile').call(this, e)
+      require('./pasteFile').default.call(this, e)
     }
     else if (html) {
       const _html = filter.call(this, html) // pass `this`
@@ -151,7 +151,7 @@ export default class Editor extends Component {
     // mac粘贴word需要 优先识别文本 然后图片
     // 粘贴板内有files 如来自QQ截屏
     // else if (pasteToFs && types && types.indexOf('Files') > -1) {
-    //   require('./pasteFile').call(this, e)
+    //   require('./pasteFile').default.call(this, e)
     // }
     // })
   }
