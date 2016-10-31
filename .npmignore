@@ -1,5 +1,5 @@
 node_modules
 demo
-dist
+dist/**
 !dist/index.js
 *.log

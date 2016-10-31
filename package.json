@@ -1,10 +1,12 @@
 {
   "name": "react-editor",
-  "version": "1.2.2",
+  "version": "1.2.3",
   "repository": "git@github.com:fritx/react-editor.git",
   "license": "MIT",
   "main": "dist/index.js",
   "scripts": {
+    "prepublish": "npm run build",
+    "build": "webpack --progress --config task/webpack.config.prod",
     "prod": "webpack -w --progress --config task/webpack.config.prod",
     "demo": "webpack -w --progress --config task/webpack.config.demo"
   },
