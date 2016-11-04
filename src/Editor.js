@@ -11,7 +11,7 @@ function escapeHTML(str) {
     .replace(/>/g, '&gt;')
 }
 
-function objEqual(o1, o2) {
+function objEqual(o1 = {}, o2 = {}) {
   const [k1, k2] = [Object.keys(o1), Object.keys(o2)]
   if (k1.length !== k2.length) return false
   return k1.every(k => {
@@ -24,6 +24,8 @@ export default class Editor extends Component {
   static propTypes = {
     pasteToFs: PropTypes.bool,
     emojiReplace: PropTypes.func,
+    className: PropTypes.string,
+    style: PropTypes.object,
   };
 
   constructor() {
@@ -172,12 +174,19 @@ export default class Editor extends Component {
   }
 
   render() {
+    // fix warning: Unknown prop `abc` on <div> tag.
+    // Remove this prop from the element.
+    // For details, see https://fb.me/react-unknown-prop
+    const { className, style } = this.props
     return (
       <div ref="edit" contentEditable
         onMouseDown={this.onMouseDown}
         onKeyDown={this.onKeyDown}
         onPaste={this.onPaste}
-        {...this.props} />
+        {...{
+          className,
+          style,
+        }} />
     )
   }
 
