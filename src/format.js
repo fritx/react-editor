@@ -7,9 +7,9 @@ export function parse() {
 }
 
 export function filter(html) {
-  let mat = html.match(/<!--StartFragment-->([\s\S]*?)<!--EndFragment-->/)
+  let mat = html.match(/<!--\s*StartFragment\s*-->([\s\S]*?)<!--\s*EndFragment\s*-->/i)
   if (mat) html = mat[1]
-  mat = html.match(/<body>([\s\S]*?)<\/body>/)
+  mat = html.match(/<body>([\s\S]*?)<\/body>/i)
   if (mat) html = mat[1]
   const $src = $('<div>').html(html)
   const $dest = $('<div>')
@@ -34,7 +34,13 @@ blockElements += ', tr'
 function filterContent($src, $dest) {
   ;[].forEach.call($src[0].childNodes, (node)=>{
     if (node.nodeType === Node.TEXT_NODE) {
-      getLine().append(node.cloneNode())
+      // getLine().append(node.cloneNode())
+      const $line = getLine()
+      let text = node.textContent
+      if ($line.is(':empty')) {
+        text = text.replace(/^\n+/g, '')
+      }
+      $line.append(new Text(text))
       return
     }
 

@@ -104,7 +104,7 @@ export default class Editor extends Component {
     const types = e.clipboardData.types || []
     const items = e.clipboardData.items || []
     let html = e.clipboardData.getData('text/html')
-    const text = e.clipboardData.getData('text/plain')
+    let text = e.clipboardData.getData('text/plain')
     // console.log('paste:html', html)
     // console.log('paste:text', text)
 
@@ -146,6 +146,7 @@ export default class Editor extends Component {
       setTimeout(() => { this.insertHTML(_html) })
     }
     else if (text) {
+      text = text.replace(/^\n+|\n+$/g, '')
       setTimeout(() => { this.insertText(text) })
     }
     // mac粘贴word需要 优先识别文本 然后图片
