@@ -24,6 +24,7 @@ export default class Editor extends Component {
   static propTypes = {
     pasteToFs: PropTypes.bool,
     emojiReplace: PropTypes.func,
+    id: PropTypes.string,
     className: PropTypes.string,
     style: PropTypes.object,
   };
@@ -177,13 +178,14 @@ export default class Editor extends Component {
     // fix warning: Unknown prop `abc` on <div> tag.
     // Remove this prop from the element.
     // For details, see https://fb.me/react-unknown-prop
-    const { className, style } = this.props
+    const { id, className, style } = this.props
     return (
       <div ref="edit" contentEditable
         onMouseDown={this.onMouseDown}
         onKeyDown={this.onKeyDown}
         onPaste={this.onPaste}
         {...{
+          id,
           className,
           style,
         }} />
