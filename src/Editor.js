@@ -141,19 +141,30 @@ export default class Editor extends Component {
       && item.kind === 'file'
       && /^image\/|^(jpe?g|png|bmp|gif)$/.test(item.type)
 
+    const pasteHTMLOrText = () => {
+      if (html) {
+        const _html = filter.call(this, html) // pass `this`
+        setTimeout(() => { this.insertHTML(_html) })
+      }
+      else if (text) {
+        text = text.replace(/^\n+|\n+$/g, '')
+        setTimeout(() => { this.insertText(text) })
+      }
+    }
+
     // 延时 解决 execCommand('paste') 递归问题
     // setTimeout(() => {
     // xslx表格含html(优先提取图片) MacQQ图文不含html(优先提取文本)
     if (pasteToFs && isImage && (html.trim() || !text.trim() && !html.trim())) {
-      require('./pasteFile').default.call(this, e)
+      require('./pasteFile').default.call(this, e, err => {
+        // windows qq粘贴单图 result为空 可以html粘贴
+        if (err) {
+          pasteHTMLOrText()
+        }
+      })
     }
-    else if (html) {
-      const _html = filter.call(this, html) // pass `this`
-      setTimeout(() => { this.insertHTML(_html) })
-    }
-    else if (text) {
-      text = text.replace(/^\n+|\n+$/g, '')
-      setTimeout(() => { this.insertText(text) })
+    else {
+      pasteHTMLOrText()
     }
     // mac粘贴word需要 优先识别文本 然后图片
     // 粘贴板内有files 如来自QQ截屏

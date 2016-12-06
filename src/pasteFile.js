@@ -16,7 +16,7 @@ function uuid() {
     s4() + '-' + s4() + s4() + s4()
 }
 
-export default function pasteFile(e) {
+export default function pasteFile(e, cb) {
   // hack 一旦粘贴 滚至最底 错误的逻辑
   // $('#editor').scrollTop(1e9)
 
@@ -51,7 +51,7 @@ export default function pasteFile(e) {
       // richText.insertCapture(url)
 
       reader.onload = (e) => {
-        if (!e.target.result) return
+        if (!e.target.result) return cb(1)
         fs.writeFile(file, e.target.result, 'binary', (err) => {
           if (err) return
           // richText.insertCapture('file://' + file)
