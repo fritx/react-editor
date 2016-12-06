@@ -115,16 +115,18 @@ export default class Editor extends Component {
     // 发送消息时有安全过滤 不怕恶意代码插入
     if (!html.trim() && /^\s*data:image\//.test(text)) {
       html = `<img src="${text.trim()}">`
-    } else {
-      // 放入else 因为后者意外地包含前者
-      // 在mac上直接从finder复制粘贴文件 nw无法获取具体路径
-      // 因此直接忽略行为 windows本身也是忽略
-      // qq能正常响应并且发送文件 这点我们做不到
-      const isFinderCopy = types[0] === 'text/plain'
-        && types[1] === 'Files'
-        && !/^https?:\/\//.test(text)
-      if (isFinderCopy) return
     }
+    // mac finder与qq图文 暂时无法区分
+    // else {
+    //   // 放入else 因为后者意外地包含前者
+    //   // 在mac上直接从finder复制粘贴文件 nw无法获取具体路径
+    //   // 因此直接忽略行为 windows本身也是忽略
+    //   // qq能正常响应并且发送文件 这点我们做不到
+    //   const isFinderCopy = types[0] === 'text/plain'
+    //     && types[1] === 'Files'
+    //     && !/^https?:\/\//.test(text)
+    //   if (isFinderCopy) return
+    // }
 
     // 优先处理图片 即可实现 base64粘贴和excel粘贴为图片
     // const isFile = types && types.indexOf('Files') > -1
@@ -141,7 +143,8 @@ export default class Editor extends Component {
 
     // 延时 解决 execCommand('paste') 递归问题
     // setTimeout(() => {
-    if (pasteToFs && isImage) {
+    // xslx表格含html(优先提取图片) MacQQ图文不含html(优先提取文本)
+    if (pasteToFs && isImage && (html.trim() || !text.trim() && !html.trim())) {
       require('./pasteFile').default.call(this, e)
     }
     else if (html) {
