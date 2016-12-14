@@ -137,7 +137,7 @@ export default class Editor extends Component {
         break
       }
     }
-    const isImage = item
+    const hasImage = item
       && item.kind === 'file'
       && /^image\/|^(jpe?g|png|bmp|gif)$/.test(item.type)
 
@@ -151,11 +151,29 @@ export default class Editor extends Component {
         setTimeout(() => { this.insertText(text) })
       }
     }
+    const isImage = hasImage && (!html && !text)
+
+    let isTable = false
+    if (html) {
+      // 来自filter函数的部分逻辑
+      const mat = html.match(/<body(>| [^>]*>)([\s\S]*?)<\/body>/i)
+      if (mat) {
+        const div = document.createElement('div')
+        div.innerHTML = mat[2]
+        if (div.querySelector('table')) {
+          isTable = true
+        }
+      }
+    }
+
+    // 从word/excel粘贴表格 需要提取图片 同QQ
+    const pasteImage = hasImage && (isImage || isTable)
 
     // 延时 解决 execCommand('paste') 递归问题
     // setTimeout(() => {
     // xslx表格含html(优先提取图片) MacQQ图文不含html(优先提取文本)
-    if (pasteToFs && isImage && (html.trim() || !text.trim() && !html.trim())) {
+    // if (pasteToFs && isImage && (html.trim() || !text.trim() && !html.trim())) {
+    if (pasteToFs && pasteImage) {
       require('./pasteFile').default.call(this, e, err => {
         // windows qq粘贴单图 result为空 可以html粘贴
         if (err) {
