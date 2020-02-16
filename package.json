@@ -1,10 +1,12 @@
 {
   "name": "react-editor",
-  "version": "1.1.2",
+  "version": "1.2.12",
   "repository": "git@github.com:fritx/react-editor.git",
   "license": "MIT",
   "main": "dist/index.js",
   "scripts": {
+    "prepublish": "npm run build",
+    "build": "webpack --progress --config task/webpack.config.prod",
     "prod": "webpack -w --progress --config task/webpack.config.prod",
     "demo": "webpack -w --progress --config task/webpack.config.demo"
   },
@@ -22,6 +24,9 @@
     "eslint-loader": "^1.3.0",
     "eslint-plugin-react": "^3.16.1",
     "html-webpack-plugin": "^1.7.0",
+    "jquery": "^3.1.1",
+    "react": "^15.3.2",
+    "react-dom": "^15.3.2",
     "style-loader": "^0.13.0",
     "webpack": "^1.12.9",
     "webpack-notifier": "^1.2.1"

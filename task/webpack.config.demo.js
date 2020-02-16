@@ -8,6 +8,11 @@ config.entry = {
   'demo.js': './demo/index.js',
 }
 
+config.output = {
+  path: 'dist/',
+  filename: '[name]'
+}
+
 config.plugins = config.plugins.concat([
   new HtmlPlugin(),
   new webpack.DefinePlugin({
