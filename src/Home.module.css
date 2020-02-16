@@ -1,0 +1,83 @@
+.Home {
+  padding: 0 0 60px;
+  min-height: 100vh;
+  background-color: #282c34;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: white;
+  font-size: calc(10px + 2vmin);
+}
+
+.HomeLogo {
+  animation: Home-logo-spin infinite 20s linear;
+  height: 20vmin;
+  /* pointer-events: none; */
+}
+
+.HomeHeader {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.HomeLink {
+  color: #61dafb;
+}
+
+.Editor {
+  padding: 8px 16px;
+}
+.InputControl {
+  box-sizing: border-box;
+  width: 70px;
+  height: 31px;
+  border: none;
+  vertical-align: bottom;
+  font-size: 50%;
+  padding: 0 12px;
+}
+.Editor img {
+  height: 40px;
+  vertical-align: bottom;
+}
+.EditorButton {
+  padding: 6px 12px;
+  font-size: 50%;
+}
+.EditorWrap1 {
+  border: solid 1px #666;
+  margin-top: 40px;
+  width: 50vw;
+  height: 160px;
+  overflow: auto;
+}
+.EditorWrap2 {
+  border: solid 1px #666;
+  margin-top: 40px;
+  width: 50vw;
+}
+.EditorWrap2 .Editor {
+  min-height: 160px;
+}
+.EditorBlock3 {
+  margin-top: 40px;
+  width: 50vw;
+  display: flex;
+  flex-direction: column;
+}
+.EditorWrap3 {
+  border: solid 1px #666;
+  height: 160px;
+  overflow: auto;
+}
+
+@keyframes Home-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}

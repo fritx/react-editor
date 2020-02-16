@@ -1,0 +1,14 @@
+{
+  "files.exclude": {
+    "node_modules": true,
+  },
+
+  "files.associations": {
+    ".npmrc": "dotenv",
+  },
+
+  // "editor.formatOnSave": true,
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true
+  },
+}

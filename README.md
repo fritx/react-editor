@@ -1,45 +1,86 @@
-# (WIP) react-editor
+# react-editor is FINALLY RETURNED !!
 
-<img width="437" height="411" src="https://raw.githubusercontent.com/fritx/react-editor/dev/Snip20160310_3.png">
+> It's been over 4 years...<br>
+> Now react-editor is BACK with fully TS & REACT-HOOKS integrated
 
-React component of `contentEditable` Rich-Text Editor that behaves like Tencent QQ's.
+- [x] Content-editable Rich-text editor
+- [x] Typescript & React-hooks based with React >= 16.8
+- [ ] Polyfill workaround with React < 16.8
+- [x] Placeholder via CSS
+- [x] Methods: focus(), insertHTML(s), insertText(s)
+- [x] auto saveRange, restoreRange, moveToEnd
+- [x] Controlled component - value, onChange
+- [x] Uncontrolled component - onChange (defaultValue wip)
+- [x] Inline-image, File handleDrop
+- [x] processHTML, processText on change
+- [ ] common processHTML lint demo
+- [x] Props API [here](#props)
+- [ ] Test cases
+- [x] 1.x Legacy: https://github.com/fritx/react-editor/tree/1.x
+- [x] 2.0-alpha Demo: https://fritx.github.io/react-editor
 
-- [x] Rich-Text (includes texts, images)
-- [x] Selection (range clear, save, restore)
-- [x] Format (filters on paste, cleans on blur)
-- [ ] Parse (content tokenizing)
-- [ ] Qface & Emoji Insertion
-- [ ] Font Settings (name, size, bold, color)
-- [ ] Drop dependency of the fucking jquery ;)
-
-```plain
-$ npm i -S jquery react-editor
+```sh
+npm i -S react-editor
 ```
 
-```.jsx
-import React, { Component } from 'react'
-import Editor from 'react-editor'
+```tsx
+import { Editor } from 'react-editor' // named export, both
+import Editor from 'react-editor' // default export
 
-class Page extends Component {
+let [value, setValue] = useState('')
+let ref = useRef()
 
-  onFocus() {
-    this.refs.editor.restoreRange()
-  }
-  onBlur() {
-    const { editor } = this.refs
-    editor.lint()
-    editor.saveRange()
-    editor.clearRange()
-  }
-  
-  render() {
-    return (
-      <div onFocus={(e) => this.onFocus(e)}
-        onBlur={(e) => this.onBlur(e)}>
-        <Editor ref="editor" className={styles.editor}
-          dangerouslySetInnerHTML={{__html: html}} />
-      </div>
-    )
-  }
+ref.focus()
+ref.insertText('foo')
+ref.insertHTML('<img src="https://foo.bar/baz.png">')
+value = 'set content'
+
+<Editor
+  ref={ref}
+  placeholder="Type message to send..."
+  className={styles.editor}
+  value={value}
+  onChange={setValue}
+/>
+```
+
+#### Props
+
+```tsx
+export interface EditorProps {
+  value?: string;
+  className?: string;
+  placeholder?: string;
+  allowInWebDrop?: boolean;
+  processHTML?: (html: string) => string;
+  processText?: (text: string) => string;
+  onFocus?: (e: React.FocusEvent<HTMLDivElement>) => void;
+  onBlur?: (e: React.FocusEvent<HTMLDivElement>) => void;
+  onDrop?: (e: React.DragEvent<HTMLDivElement>) => void;
+  onPaste?: (e: React.ClipboardEvent<HTMLDivElement>) => void;
+  onChange?: (value: string) => void;
+  [restProp: string]: any; // onto <div>
+}
+
+export interface EditorRefAttrs {
+  focus: () => void;
+  insertHTML: (html: string) => void;
+  insertText: (text: string) => void;
 }
 ```
+
+**for react < 16.8 we need hooks polyfill workaround**
+
+```tsx
+// todo
+```
+
+**for react-editor legacy version**
+
+```sh
+npm i -S react-editor@1.x
+```
+
+---
+
+This project was bootstrapped with [react-ts-demo](https://github.com/fritx/react-ts-demo).

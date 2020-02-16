@@ -1,5 +1,0 @@
-node_modules
-demo
-dist/**
-!dist/index.js
-*.log
