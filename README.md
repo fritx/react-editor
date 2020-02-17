@@ -12,7 +12,8 @@
 - [x] Controlled component - value, onChange
 - [x] Uncontrolled component - onChange (defaultValue wip)
 - [x] Inline-image, File handleDrop
-- [x] processHTML, processText on change
+- [x] processHTML, processText on insert
+- [ ] processHTML, processText on paste
 - [ ] common processHTML lint demo
 - [x] Props API [here](#props)
 - [ ] Test cases

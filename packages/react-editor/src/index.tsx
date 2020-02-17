@@ -14,6 +14,7 @@ export interface EditorProps {
   onDrop?: (e: React.DragEvent<HTMLDivElement>) => void;
   onPaste?: (e: React.ClipboardEvent<HTMLDivElement>) => void;
   onChange?: (value: string) => void;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   [restProp: string]: any; // onto <div>
 }
 
@@ -137,7 +138,8 @@ export let Editor = forwardRef<EditorRefAttrs, EditorProps>((props, ref) => {
       // } else if (text) {
       //   insertText(text);
       // }
-      // if (onPaste) onPaste(e);
+      // @todo
+      if (onPaste) onPaste(e);
     },
     [insertHTML, insertText]
   );
