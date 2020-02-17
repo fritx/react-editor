@@ -24,6 +24,7 @@
 
 .HomeLink {
   color: #61dafb;
+  z-index: 1; /* fix covered by rotating logo */
 }
 
 .Editor {

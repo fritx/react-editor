@@ -1,6 +1,5 @@
-import React, { useCallback, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { Editor, EditorRefAttrs } from 'react-editor';
-import Helmet from 'react-helmet';
 import styles from './Home.module.css';
 import logo from './logo.svg';
 
@@ -33,6 +32,10 @@ export let Home: React.FC = () => {
 
   let handleImgHeight = useCallback(e => {
     setImgHeight(e.target.value);
+  }, []);
+
+  useEffect(() => {
+    document.title = 'react-editor';
   }, []);
 
   return (
