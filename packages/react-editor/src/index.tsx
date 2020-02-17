@@ -1,6 +1,6 @@
 import * as React from 'react';
+import { applyRange, getRange, moveToEnd } from './range';
 import styles from './styles.css';
-import { getRange, applyRange, moveToEnd } from './range';
 
 export interface EditorProps {
   value?: string;
