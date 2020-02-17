@@ -181,5 +181,3 @@ export let Editor = forwardRef<EditorRefAttrs, EditorProps>((props, ref) => {
     />
   );
 });
-
-export default Editor;

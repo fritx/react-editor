@@ -25,8 +25,7 @@ npm i -S react-editor
 ```
 
 ```tsx
-import { Editor } from 'react-editor' // named export, both
-import Editor from 'react-editor' // default export
+import { Editor } from 'react-editor'
 
 let [value, setValue] = useState('')
 let ref = useRef()
