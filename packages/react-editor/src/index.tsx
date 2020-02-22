@@ -4,6 +4,7 @@ import styles from './styles.css';
 
 export interface EditorProps {
   value?: string;
+  defaultValue?: string;
   className?: string;
   placeholder?: string;
   allowInWebDrop?: boolean;
@@ -27,6 +28,7 @@ export interface EditorRefAttrs {
 let {
   forwardRef,
   useRef,
+  useState,
   useLayoutEffect,
   useCallback,
   useImperativeHandle,
@@ -35,6 +37,7 @@ let {
 export let Editor = forwardRef<EditorRefAttrs, EditorProps>((props, ref) => {
   let {
     value,
+    defaultValue,
     className,
     placeholder,
     allowInWebDrop,
@@ -47,6 +50,7 @@ export let Editor = forwardRef<EditorRefAttrs, EditorProps>((props, ref) => {
     onPaste,
     ...restProps
   } = props;
+  let [onceChanged, setOnceChanged] = useState(false);
   let elRef = useRef<HTMLDivElement>(null);
   let rangeRef = useRef<Range | null>(null);
 
@@ -94,6 +98,7 @@ export let Editor = forwardRef<EditorRefAttrs, EditorProps>((props, ref) => {
       if (el && el.innerText === '\n') {
         el.innerHTML = ''; // fix placeholder
       }
+      setOnceChanged(true);
       let newValue = el.innerHTML;
       if (onChange) onChange(newValue);
     }
@@ -165,6 +170,22 @@ export let Editor = forwardRef<EditorRefAttrs, EditorProps>((props, ref) => {
       moveToEnd(el);
     }
   }, [value, processHTML]);
+
+  useLayoutEffect(() => {
+    let el = elRef.current;
+    if (
+      el &&
+      !onceChanged &&
+      value === undefined &&
+      defaultValue !== undefined &&
+      defaultValue !== el.innerHTML
+    ) {
+      let html = defaultValue;
+      if (processHTML) html = processHTML(html);
+      el.innerHTML = html;
+      moveToEnd(el);
+    }
+  }, [value, processHTML, defaultValue, onceChanged]);
 
   return (
     <div
