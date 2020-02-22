@@ -9,7 +9,7 @@
 - [x] Methods: focus(), insertHTML(s), insertText(s)
 - [x] Auto saveRange, restoreRange, moveToEnd
 - [x] Usage of value/onChange, defaultValue/onChange
-- [x] Inline-image, File handleDrop
+- [x] In-web-image, File handleDrop
 - [ ] processHTML, processText wip
 - [x] 1.x Legacy: https://github.com/fritx/react-editor/tree/1.x
 - [x] 2.0-alpha Demo: https://fritx.github.io/react-editor
@@ -43,6 +43,7 @@ value = 'set content'
 ```tsx
 export interface EditorProps {
   value?: string;
+  defaultValue?: string;
   className?: string;
   placeholder?: string;
   allowInWebDrop?: boolean;

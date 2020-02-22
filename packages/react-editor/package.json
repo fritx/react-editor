@@ -1,6 +1,6 @@
 {
   "name": "react-editor",
-  "version": "2.0.0-alpha",
+  "version": "2.0.0-alpha.2",
   "description": "",
   "author": "fritx",
   "license": "MIT",
@@ -9,6 +9,7 @@
   "module": "dist/index.es.js",
   "jsnext:main": "dist/index.es.js",
   "scripts": {
+    "prepublish": "npm run build",
     "build": "rollup -c",
     "watch": "rollup -c -w"
   },
