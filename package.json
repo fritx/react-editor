@@ -4,7 +4,9 @@
   "private": true,
   "scripts": {
     "preinstall": "cd ./packages/react-editor && npm i",
+    "postinstall": "npm run lib:build",
     "lib:build": "cd ./packages/react-editor && npm run build",
+    "lib:watch": "cd ./packages/react-editor && npm run watch",
     "deploy": "npm run build && gh-pages -d ./build",
     "start": "react-scripts start",
     "build": "npm run lib:build && PUBLIC_URL=. react-scripts build",
@@ -27,6 +29,8 @@
     "eslint-plugin-prettier": "^3.1.2",
     "eslint-plugin-react": "^7.18.3",
     "gh-pages": "^2.2.0",
+    "jsdom-innertext": "file:packages/jsdom-innertext",
+    "jsdom-selection": "file:packages/jsdom-selection",
     "prettier": "^1.19.1",
     "react-scripts": "3.0.1",
     "typescript": "3.5.2"

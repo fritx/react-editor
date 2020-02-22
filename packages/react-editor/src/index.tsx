@@ -96,6 +96,7 @@ export let Editor = forwardRef<EditorRefAttrs, EditorProps>((props, ref) => {
     let el = elRef.current;
     if (el) {
       if (el && el.innerText === '\n') {
+        // @fixme
         el.innerHTML = ''; // fix placeholder
       }
       setOnceChanged(true);

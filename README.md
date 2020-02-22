@@ -3,20 +3,14 @@
 > It's been over 4 years...<br>
 > Now react-editor is BACK with fully TS & REACT-HOOKS integrated
 
-- [x] Content-editable Rich-text editor
-- [x] Typescript & React-hooks based with React >= 16.8
+- [x] Rich-text Editor with TS & React-hooks
 - [ ] Polyfill workaround with React < 16.8
 - [x] Placeholder via CSS
 - [x] Methods: focus(), insertHTML(s), insertText(s)
-- [x] auto saveRange, restoreRange, moveToEnd
-- [x] Controlled component - value, onChange
-- [x] Uncontrolled component - onChange (defaultValue wip)
+- [x] Auto saveRange, restoreRange, moveToEnd
+- [x] Usage of value/onChange, defaultValue/onChange
 - [x] Inline-image, File handleDrop
-- [x] processHTML, processText on insert
-- [ ] processHTML, processText on paste
-- [ ] common processHTML lint demo
-- [x] Props API [here](#props)
-- [ ] Test cases
+- [ ] processHTML, processText wip
 - [x] 1.x Legacy: https://github.com/fritx/react-editor/tree/1.x
 - [x] 2.0-alpha Demo: https://fritx.github.io/react-editor
 
@@ -83,4 +77,4 @@ npm i -S react-editor@1.x
 
 ---
 
-This project was bootstrapped with [react-ts-demo](https://github.com/fritx/react-ts-demo).
+This project was bootstrapped with [create-react-library](https://github.com/transitive-bullshit/create-react-library) & [react-ts-demo](https://github.com/fritx/react-ts-demo).
