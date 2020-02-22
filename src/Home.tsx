@@ -14,6 +14,12 @@ export let Home: React.FC = () => {
 
   let setRandomValue = useCallback(() => {
     setValue(String(Math.random()));
+
+    // wait for editor render
+    setTimeout(() => {
+      let editor = ref.current;
+      if (editor) editor.focus();
+    });
   }, []);
 
   let insertEmoji = useCallback(() => {

@@ -54,6 +54,10 @@ export let Editor = forwardRef<EditorRefAttrs, EditorProps>((props, ref) => {
   let elRef = useRef<HTMLDivElement>(null);
   let rangeRef = useRef<Range | null>(null);
 
+  let clearRange = useCallback(() => {
+    rangeRef.current = null;
+  }, []);
+
   let saveRange = useCallback(() => {
     let range = getRange();
     rangeRef.current = range;
@@ -173,7 +177,7 @@ export let Editor = forwardRef<EditorRefAttrs, EditorProps>((props, ref) => {
       let html = value;
       if (processHTML) html = processHTML(html);
       el.innerHTML = html;
-      moveToEnd(el);
+      clearRange();
     }
   }, [value, processHTML]);
 
@@ -189,7 +193,7 @@ export let Editor = forwardRef<EditorRefAttrs, EditorProps>((props, ref) => {
       let html = defaultValue;
       if (processHTML) html = processHTML(html);
       el.innerHTML = html;
-      moveToEnd(el);
+      clearRange();
     }
   }, [value, processHTML, defaultValue, onceChanged]);
 
