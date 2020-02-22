@@ -95,10 +95,15 @@ export let Editor = forwardRef<EditorRefAttrs, EditorProps>((props, ref) => {
   let handleInput = useCallback(() => {
     let el = elRef.current;
     if (el) {
-      if (el && el.innerText === '\n') {
-        // @fixme
-        el.innerHTML = ''; // fix placeholder
+      // fix placeholder
+      if (
+        el.innerHTML === '\u0008' ||
+        el.innerHTML === '<br>' ||
+        el.innerHTML === '<div><br></div>'
+      ) {
+        el.innerHTML = '';
       }
+
       setOnceChanged(true);
       let newValue = el.innerHTML;
       if (onChange) onChange(newValue);
