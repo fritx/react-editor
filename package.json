@@ -7,9 +7,11 @@
     "postinstall": "npm run lib:build",
     "lib:build": "cd ./packages/react-editor && npm run build",
     "lib:watch": "cd ./packages/react-editor && npm run watch",
+    "lib:publish": "cd ./packages/react-editor && npm publish",
     "deploy": "npm run build && gh-pages -d ./build",
     "start": "react-scripts start",
     "build": "npm run lib:build && PUBLIC_URL=. react-scripts build",
+    "coverage": "CI=true npm test -- --coverage",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
@@ -34,6 +36,12 @@
     "prettier": "^1.19.1",
     "react-scripts": "^3.4.0",
     "typescript": "^3.8.2"
+  },
+  "jest": {
+    "collectCoverageFrom": [
+      "<rootDir>/packages/react-editor/dist/*.{js,jsx,ts,tsx}",
+      "!**/node_modules/**"
+    ]
   },
   "eslintConfig": {
     "extends": "react-app"

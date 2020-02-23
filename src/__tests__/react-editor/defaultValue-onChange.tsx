@@ -56,4 +56,12 @@ it('usage of defaultValue and onChange', () => {
   render();
   editor = container.querySelector('#editor') as HTMLDivElement;
   expect(editor.innerHTML).toBe('new content');
+
+  // default value getting changed after once input
+  for (let i = 1; i <= 3; i++) {
+    defaultValue = `default content {i}`;
+    render();
+    editor = container.querySelector('#editor') as HTMLDivElement;
+    expect(editor.innerHTML).toBe('new content');
+  }
 });
