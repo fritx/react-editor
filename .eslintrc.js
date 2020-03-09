@@ -14,6 +14,7 @@ module.exports = {
     },
   },
   rules: {
+    'prefer-const': 'off',
     'react/display-name': 'off',
     'react/prop-types': 'off',
     // Place to specify ESLint rules. Can be used to overwrite rules specified from the extended configs
