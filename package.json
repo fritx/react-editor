@@ -3,8 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "preinstall": "cd ./packages/react-editor && npm i",
-    "postinstall": "npm run lib:build",
+    "postinstall": "cd ./packages/react-editor && npm i && npm run build",
     "lib:build": "cd ./packages/react-editor && npm run build",
     "lib:watch": "cd ./packages/react-editor && npm run watch",
     "lib:publish": "cd ./packages/react-editor && npm publish",
