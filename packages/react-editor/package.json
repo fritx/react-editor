@@ -9,8 +9,8 @@
   "module": "dist/index.es.js",
   "jsnext:main": "dist/index.es.js",
   "scripts": {
-    "prepublishOnly": "cp ../../README.md ./ && npm run build",
-    "postpublish": "rm README.md",
+    "prepublishOnly": "git stash -u && cp ../../README.md ./ && npm run build",
+    "postpublish": "rm README.md && git stash apply",
     "build": "rollup -c",
     "watch": "rollup -c -w"
   },
