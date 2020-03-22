@@ -64,6 +64,24 @@ export interface EditorRefAttrs {
 }
 ```
 
+**for umd / \<script> usage**
+
+```html
+<script src="https://unpkg.com/react"></script>
+<script src="https://unpkg.com/react-dom"></script>
+<script src="https://unpkg.com/react-editor"></script>
+<script src="myapp.js"></script>
+```
+
+```js
+// myapp.js
+let React = window.React;
+let ReactDOM = window.ReactDOM;
+let { Editor } = window.ReactEditor;
+
+ReactDOM.render(<Editor />, mountNode);
+```
+
 **for react < 16.8 we need hooks polyfill workaround**
 
 ```tsx
