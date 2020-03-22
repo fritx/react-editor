@@ -6,20 +6,27 @@ import postcss from 'rollup-plugin-postcss';
 import typescript from 'rollup-plugin-typescript2';
 import pkg from './package.json';
 
+let outputOptions = {
+  exports: 'named',
+  sourcemap: true,
+};
+
 export default {
   input: 'src/index.tsx',
   output: [
     {
-      file: pkg.main,
-      format: 'cjs',
-      exports: 'named',
-      sourcemap: true,
-    },
-    {
+      ...outputOptions,
       file: pkg.module,
       format: 'es',
-      exports: 'named',
-      sourcemap: true,
+    },
+    {
+      ...outputOptions,
+      file: pkg.main,
+      format: 'umd',
+      name: 'ReactEditor',
+      globals: {
+        react: 'React',
+      },
     },
   ],
   plugins: [
