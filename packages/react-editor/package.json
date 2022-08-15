@@ -1,6 +1,6 @@
 {
   "name": "react-editor",
-  "version": "2.0.0-alpha.5",
+  "version": "2.0.1",
   "description": "",
   "author": "fritx",
   "license": "MIT",
@@ -15,8 +15,8 @@
     "watch": "rollup -c -w"
   },
   "peerDependencies": {
-    "react": "^15.0.0 || ^16.0.0",
-    "react-dom": "^15.0.0 || ^16.0.0"
+    "react": ">= 16.8",
+    "react-dom": ">= 16.8"
   },
   "devDependencies": {
     "@rollup/plugin-commonjs": "^11.0.2",
