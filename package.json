@@ -2,8 +2,12 @@
   "name": "react-editor-repo",
   "version": "0.0.0",
   "private": true,
+  "engines": {
+    "npm": "please-use-yarn",
+    "yarn": "*"
+  },
   "scripts": {
-    "postinstall": "cd ./packages/react-editor && npm i && npm run build",
+    "postinstall": "cd ./packages/react-editor && yarn && npm run build",
     "lib:build": "cd ./packages/react-editor && npm run build",
     "lib:watch": "cd ./packages/react-editor && npm run watch",
     "lib:publish": "cd ./packages/react-editor && npm publish",
